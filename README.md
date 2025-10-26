@@ -1,73 +1,61 @@
-Hybrid Application Tracking System (HATS) is a full-featured web API built with ASP.NET Core 8.0 and Entity Framework Core designed to manage job applications with automated and manual workflows. It supports three distinct roles: Applicants, Admins, and BotMimic automation for technical applications.
+# Application Tracking System
 
-Features
-JWT-based Authentication and Role-based Authorization
+## Overview
 
-Applicant can apply to jobs and track their application status
+This is a role-based web API built with ASP.NET Core and Entity Framework Core to manage job applications. It supports Applicants, Admins, and an automated Bot Mimic to handle technical applications.
 
-Admin can manually manage job postings and non-technical applications
+Features include:
+- JWT authentication and role-based authorization
+- Applicants can apply for jobs and view application statuses
+- Admins can manage job postings and manually update applications for non-technical roles
+- Bot Mimic automatically processes technical applications through defined stages
+- Persistent data storage with SQL Server using EF Core
 
-BotMimic automates application status progression for technical roles
+## Technologies Used
 
-Database persistence with SQL Server and EF Core migrations
+- ASP.NET Core 8.0 Web API  
+- Entity Framework Core  
+- SQL Server / LocalDB  
+- JWT for authentication  
+- Swagger for API documentation and testing
 
-Swagger UI integration for easy API testing
+## Setup Instructions
 
-Technologies Used
-.NET 8.0 / ASP.NET Core Web API
+1. Clone the repository  
+2. Configure your SQL Server connection string in `appsettings.json`  
+3. Open Package Manager Console and run:
+4. Run the application (`F5` or `dotnet run`), Swagger UI will be available at `https://localhost:5001/swagger`.
 
-Entity Framework Core (Code First)
+## Default Users
 
-SQL Server / LocalDB
+| Username   | Password  | Role      |
+|------------|-----------|-----------|
+| admin      | password3 | Admin     |
+| applicant1 | password1 | Applicant |
+| botmimic   | password2 | BotMimic  |
 
-Swagger (Swashbuckle)
+## Key API Endpoints
 
-C#
+- **Authentication**  
+`POST /Auth/login` - login and receive JWT token
 
-Getting Started
-Prerequisites
-Visual Studio 2022 or later
+- **Applicant**  
+`POST /Applicant/apply` - apply for jobs  
+`GET /Applicant/my-applications` - list applicant applications  
+`GET /Applicant/dashboard` - applicant dashboard
 
-.NET 8.0 SDK
+- **Admin**  
+`GET /Admin/all-applications` - list all applications  
+`PUT /Admin/update-application-status/{id}` - update non-technical applications  
+`POST /Admin/create-job-posting` - add job posting  
+`GET /Admin/dashboard` - admin dashboard statistics
 
-SQL Server or LocalDB instance
+- **Bot Mimic**  
+`POST /BotMimic/process-technical-applications` - move Applied → Under Review  
+`POST /BotMimic/schedule-technical-assessment` - Under Review → Technical Assessment  
+`POST /BotMimic/move-to-interview` - Technical Assessment → Interview  
+`POST /BotMimic/generate-offers` - Interview → Offer  
+`GET /BotMimic/statistics` - bot processing stats
 
-Running the Project
-Clone this repository.
 
-Update connection string in appsettings.json.
 
-Use Package Manager Console:
-
-text
-Add-Migration InitialCreate
-Update-Database
-Press F5 to run the application. Swagger will be available at:
-
-text
-https://localhost:5001/swagger
-Default Users for Testing
-Username	Password	Role
-admin	password3	Admin
-applicant1	password1	Applicant
-botmimic	password2	BotMimic
-API Endpoints (Sample)
-POST /Auth/login — Login and get JWT token
-
-POST /Applicant/apply — Applicant submits job application
-
-GET /Applicant/my-applications — List applicant's applications
-
-GET /Admin/all-applications — Admin views all applications
-
-PUT /Admin/update-application-status/{id} — Admin updates non-technical app status
-
-POST /BotMimic/process-technical-applications — Bot processes technical apps through stages
-
-Project Structure
-text
-/Controllers
-/Data
-/Models
-/Program.cs
-/appsettings.json
