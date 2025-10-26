@@ -1,0 +1,6 @@
+@ApplicationTrackingSystem_HostAddress = http://localhost:5089
+
+GET {{ApplicationTrackingSystem_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
